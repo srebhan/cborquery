@@ -238,3 +238,30 @@ func TestQueryExample(t *testing.T) {
 		require.EqualValues(t, expected[i], v)
 	}
 }
+
+func TestQueryNode(t *testing.T) {
+	test := []map[interface{}]interface{}{
+		{
+			258: "002-2.1.x",
+			259: "14ca85ed9",
+			260: 1687787189711304960,
+			261: true,
+			263: 3,
+			264: 23.76,
+			265: 68.934,
+			266: false,
+		},
+	}
+	msg, err := cbor.Marshal(test, cbor.EncOptions{})
+	require.NoError(t, err)
+
+	doc, err := Parse(bytes.NewBuffer(msg))
+	require.NoError(t, err)
+	selected, err := QueryAll(doc, "//element")
+	require.NoError(t, err)
+	require.Len(t, selected, 1)
+	nodes, err := QueryAll(selected[0], "u260")
+	require.NoError(t, err)
+	require.Len(t, nodes, 1)
+	require.Equal(t, uint64(1687787189711304960), nodes[0].value)
+}

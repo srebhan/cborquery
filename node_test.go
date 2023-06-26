@@ -85,9 +85,9 @@ func TestNumericKeys(t *testing.T) {
 	require.Len(t, doc.ChildNodes(), 4)
 
 	expected := []keyValue{
-		{"1", "foo"},
-		{"2", true},
-		{"3.14", float64(42.3)},
+		{"u1", "foo"},
+		{"u2", true},
+		{"f3.14", float64(42.3)},
 		{"test", uint64(23)},
 	}
 	actual := make([]keyValue, 0, len(doc.ChildNodes()))
@@ -115,10 +115,10 @@ func TestArray(t *testing.T) {
 	require.Len(t, doc.ChildNodes(), 2)
 
 	expected := []keyValue{
-		{"element/1", "foo"},
-		{"element/2", "bar"},
-		{"element/3", uint64(42)},
-		{"element/99", float64(3.1415)},
+		{"element/u1", "foo"},
+		{"element/u2", "bar"},
+		{"element/u3", uint64(42)},
+		{"element/u99", float64(3.1415)},
 	}
 	actual := make([]keyValue, 0, len(doc.ChildNodes()))
 	for _, n := range doc.ChildNodes() {

@@ -155,7 +155,7 @@ func parseValue(parent *Node, msg interface{}, parentName string, level int) err
 		// will break at least tests
 		elements := make([]keyValue, 0, len(v))
 		for k, val := range v {
-			key, err := toString(k)
+			key, err := toNodeName(k)
 			if err != nil {
 				return fmt.Errorf("object key %v: %w", k, err)
 			}
