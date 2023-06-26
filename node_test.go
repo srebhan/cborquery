@@ -96,3 +96,35 @@ func TestNumericKeys(t *testing.T) {
 	}
 	require.ElementsMatch(t, actual, expected)
 }
+
+func TestArray(t *testing.T) {
+	test := []map[interface{}]interface{}{
+		{
+			1: "foo",
+			2: "bar",
+		}, {
+			3:  42,
+			99: 3.1415,
+		},
+	}
+	msg, err := cbor.Marshal(test, cbor.EncOptions{})
+	require.NoError(t, err)
+
+	doc, err := Parse(bytes.NewBuffer(msg))
+	require.NoError(t, err)
+	require.Len(t, doc.ChildNodes(), 2)
+
+	expected := []keyValue{
+		{"element/1", "foo"},
+		{"element/2", "bar"},
+		{"element/3", uint64(42)},
+		{"element/99", float64(3.1415)},
+	}
+	actual := make([]keyValue, 0, len(doc.ChildNodes()))
+	for _, n := range doc.ChildNodes() {
+		for _, c := range n.ChildNodes() {
+			actual = append(actual, keyValue{n.Name + "/" + c.Name, c.Value()})
+		}
+	}
+	require.ElementsMatch(t, actual, expected)
+}

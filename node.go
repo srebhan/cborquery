@@ -79,15 +79,11 @@ func outputXML(buf *bytes.Buffer, n *Node) {
 		return
 	}
 
-	name := "element"
-	if n.Name != "" {
-		name = n.Name
-	}
-	buf.WriteString("<" + name + ">")
+	buf.WriteString("<" + n.Name + ">")
 	for child := n.FirstChild; child != nil; child = child.NextSibling {
 		outputXML(buf, child)
 	}
-	buf.WriteString("</" + name + ">")
+	buf.WriteString("</" + n.Name + ">")
 }
 
 // OutputXML prints the XML string.
@@ -139,6 +135,10 @@ func Parse(r io.Reader) (*Node, error) {
 }
 
 func parseValue(parent *Node, msg interface{}, parentName string, level int) error {
+	if parentName == "" {
+		parentName = "element"
+	}
+
 	switch v := msg.(type) {
 	case []interface{}:
 		// Array
