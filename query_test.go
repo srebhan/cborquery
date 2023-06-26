@@ -12,9 +12,8 @@ import (
 )
 
 type keyValue struct {
-	key     string
-	value   string
-	missing bool
+	key   string
+	value string
 }
 
 type keyValueList []keyValue
@@ -69,24 +68,11 @@ func TestNavigator(t *testing.T) {
 		require.True(t, nav.MoveToChild())
 
 		for i, v := range keyvalues {
-			if !v.missing {
-				if i > 0 {
-					require.True(t, nav.MoveToNext())
-				}
-				require.Equal(t, v.key, nav.Current().Name)
-				require.Equal(t, v.value, nav.Value())
-			} else {
-				if i > 0 {
-					if !nav.MoveToNext() {
-						// There is no other node so we passed the test
-						continue
-					}
-				}
-				require.NotEqual(t, v.key, nav.Current().Name)
-				if i > 0 {
-					require.True(t, nav.MoveToPrevious())
-				}
+			if i > 0 {
+				require.True(t, nav.MoveToNext())
 			}
+			require.Equal(t, v.key, nav.Current().Name)
+			require.Equal(t, v.value, nav.Value())
 		}
 		require.True(t, nav.MoveToParent())
 		require.True(t, nav.MoveToNext())
