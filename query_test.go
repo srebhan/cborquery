@@ -11,11 +11,6 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-type keyValue struct {
-	key   string
-	value string
-}
-
 type keyValueList []keyValue
 
 func BenchmarkSelectorCache(b *testing.B) {

@@ -11,6 +11,11 @@ import (
 	"github.com/fxamacker/cbor"
 )
 
+type keyValue struct {
+	key   string
+	value interface{}
+}
+
 // A NodeType is the type of a Node.
 type NodeType uint
 
@@ -148,18 +153,20 @@ func parseValue(parent *Node, msg interface{}, parentName string, level int) err
 		// Object
 		// Sort the elements by name as the map access is randomized and this
 		// will break at least tests
-		keys := make([]string, 0, len(v))
-		for k := range v {
-			key, ok := k.(string)
-			if !ok {
-				return fmt.Errorf("object key %v (%T) is not a string", k, k)
+		elements := make([]keyValue, 0, len(v))
+		for k, val := range v {
+			key, err := toString(k)
+			if err != nil {
+				return fmt.Errorf("object key %v: %w", k, err)
 			}
-			keys = append(keys, key)
+			elements = append(elements, keyValue{key, val})
 		}
-		sort.Strings(keys)
+		sort.Slice(elements, func(i, j int) bool {
+			return elements[i].key < elements[j].key
+		})
 
-		for _, key := range keys {
-			val := v[key]
+		for _, el := range elements {
+			key, val := el.key, el.value
 			if _, isArray := val.([]interface{}); isArray {
 				if err := parseValue(parent, val, key, level+1); err != nil {
 					return err

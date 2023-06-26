@@ -69,3 +69,30 @@ func TestParseAddressBookXML(t *testing.T) {
 	expected := `<?xml version="1.0"?><root><people><age>42</age><email>john@example.com</email><id>101</id><name>John Doe</name></people><people><age>40</age><id>102</id><name>Jane Doe</name></people><people><age>12</age><email>jack@example.com</email><id>201</id><name>Jack Doe</name><phones><number>555-555-5555</number><type>2</type></phones></people><people><age>19</age><email>buck@example.com</email><id>301</id><name>Jack Buck</name><phones><number>555-555-0000</number><type>1</type></phones><phones><number>555-555-0001</number></phones><phones><number>555-555-0002</number><type>2</type></phones></people><people><age>16</age><email>janet@example.com</email><id>1001</id><name>Janet Doe</name><phones><number>555-777-0000</number></phones><phones><number>555-777-0001</number><type>1</type></phones></people><tags>home</tags><tags>private</tags><tags>friends</tags></root>`
 	require.Equal(t, expected, actual)
 }
+
+func TestNumericKeys(t *testing.T) {
+	test := map[interface{}]interface{}{
+		1:      "foo",
+		2:      true,
+		3.14:   42.3,
+		"test": 23,
+	}
+	msg, err := cbor.Marshal(test, cbor.EncOptions{})
+	require.NoError(t, err)
+
+	doc, err := Parse(bytes.NewBuffer(msg))
+	require.NoError(t, err)
+	require.Len(t, doc.ChildNodes(), 4)
+
+	expected := []keyValue{
+		{"1", "foo"},
+		{"2", true},
+		{"3.14", float64(42.3)},
+		{"test", uint64(23)},
+	}
+	actual := make([]keyValue, 0, len(doc.ChildNodes()))
+	for _, n := range doc.ChildNodes() {
+		actual = append(actual, keyValue{n.Name, n.Value()})
+	}
+	require.ElementsMatch(t, actual, expected)
+}
