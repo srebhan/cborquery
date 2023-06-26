@@ -260,7 +260,7 @@ func TestQueryNode(t *testing.T) {
 	selected, err := QueryAll(doc, "//element")
 	require.NoError(t, err)
 	require.Len(t, selected, 1)
-	nodes, err := QueryAll(selected[0], "u260")
+	nodes, err := QueryAll(selected[0], "n260")
 	require.NoError(t, err)
 	require.Len(t, nodes, 1)
 	require.Equal(t, uint64(1687787189711304960), nodes[0].value)
