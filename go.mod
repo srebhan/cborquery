@@ -1,4 +1,4 @@
-module github.com/srebhan/cborquery
+module github.com/srebhan/cborquery/v1
 
 go 1.20
 
