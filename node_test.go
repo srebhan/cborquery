@@ -7,7 +7,7 @@ import (
 	"github.com/fxamacker/cbor/v2"
 	"github.com/stretchr/testify/require"
 
-	"github.com/srebhan/cborquery/v1/testcases/addressbook"
+	"github.com/srebhan/cborquery/testcases/addressbook"
 )
 
 var addressbookSample = &addressbook.AddressBook{
