@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"testing"
 
-	"github.com/fxamacker/cbor"
+	"github.com/fxamacker/cbor/v2"
 	"github.com/stretchr/testify/require"
 
 	"github.com/srebhan/cborquery/testcases/addressbook"
@@ -58,7 +58,7 @@ var addressbookSample = &addressbook.AddressBook{
 }
 
 func TestParseAddressBookXML(t *testing.T) {
-	msg, err := cbor.Marshal(addressbookSample, cbor.EncOptions{})
+	msg, err := cbor.Marshal(addressbookSample)
 	require.NoError(t, err)
 
 	doc, err := Parse(bytes.NewBuffer(msg))
@@ -77,7 +77,7 @@ func TestNumericKeys(t *testing.T) {
 		3.14:   42.3,
 		"test": 23,
 	}
-	msg, err := cbor.Marshal(test, cbor.EncOptions{})
+	msg, err := cbor.Marshal(test)
 	require.NoError(t, err)
 
 	doc, err := Parse(bytes.NewBuffer(msg))
@@ -107,7 +107,7 @@ func TestArray(t *testing.T) {
 			99: 3.1415,
 		},
 	}
-	msg, err := cbor.Marshal(test, cbor.EncOptions{})
+	msg, err := cbor.Marshal(test)
 	require.NoError(t, err)
 
 	doc, err := Parse(bytes.NewBuffer(msg))
