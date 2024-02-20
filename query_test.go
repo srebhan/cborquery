@@ -7,7 +7,7 @@ import (
 	"testing"
 
 	"github.com/antchfx/xpath"
-	"github.com/fxamacker/cbor"
+	"github.com/fxamacker/cbor/v2"
 	"github.com/stretchr/testify/require"
 )
 
@@ -34,7 +34,7 @@ func BenchmarkDisableSelectorCache(b *testing.B) {
 }
 
 func TestNavigator(t *testing.T) {
-	msg, err := cbor.Marshal(addressbookSample, cbor.EncOptions{})
+	msg, err := cbor.Marshal(addressbookSample)
 	require.NoError(t, err)
 
 	doc, err := Parse(bytes.NewBuffer(msg))
@@ -78,7 +78,7 @@ func TestNavigator(t *testing.T) {
 }
 
 func TestQueryNames(t *testing.T) {
-	msg, err := cbor.Marshal(addressbookSample, cbor.EncOptions{})
+	msg, err := cbor.Marshal(addressbookSample)
 	require.NoError(t, err)
 
 	doc, err := Parse(bytes.NewBuffer(msg))
@@ -116,7 +116,7 @@ func TestQueryNames(t *testing.T) {
 }
 
 func TestQueryPhoneNumberFirst(t *testing.T) {
-	msg, err := cbor.Marshal(addressbookSample, cbor.EncOptions{})
+	msg, err := cbor.Marshal(addressbookSample)
 	require.NoError(t, err)
 
 	doc, err := Parse(bytes.NewBuffer(msg))
@@ -137,7 +137,7 @@ func TestQueryPhoneNumberFirst(t *testing.T) {
 }
 
 func TestQueryPhoneNumberLast(t *testing.T) {
-	msg, err := cbor.Marshal(addressbookSample, cbor.EncOptions{})
+	msg, err := cbor.Marshal(addressbookSample)
 	require.NoError(t, err)
 
 	doc, err := Parse(bytes.NewBuffer(msg))
@@ -158,7 +158,7 @@ func TestQueryPhoneNumberLast(t *testing.T) {
 }
 
 func TestQueryPhoneNoEmail(t *testing.T) {
-	msg, err := cbor.Marshal(addressbookSample, cbor.EncOptions{})
+	msg, err := cbor.Marshal(addressbookSample)
 	require.NoError(t, err)
 
 	doc, err := Parse(bytes.NewBuffer(msg))
@@ -172,7 +172,7 @@ func TestQueryPhoneNoEmail(t *testing.T) {
 }
 
 func TestQueryPhoneAge(t *testing.T) {
-	msg, err := cbor.Marshal(addressbookSample, cbor.EncOptions{})
+	msg, err := cbor.Marshal(addressbookSample)
 	require.NoError(t, err)
 
 	doc, err := Parse(bytes.NewBuffer(msg))
@@ -193,7 +193,7 @@ func TestQueryPhoneAge(t *testing.T) {
 }
 
 func TestQueryJack(t *testing.T) {
-	msg, err := cbor.Marshal(addressbookSample, cbor.EncOptions{})
+	msg, err := cbor.Marshal(addressbookSample)
 	require.NoError(t, err)
 
 	doc, err := Parse(bytes.NewBuffer(msg))
@@ -210,7 +210,7 @@ func TestQueryJack(t *testing.T) {
 }
 
 func TestQueryExample(t *testing.T) {
-	msg, err := cbor.Marshal(addressbookSample, cbor.EncOptions{})
+	msg, err := cbor.Marshal(addressbookSample)
 	require.NoError(t, err)
 
 	doc, err := Parse(bytes.NewBuffer(msg))
@@ -252,7 +252,7 @@ func TestQueryNode(t *testing.T) {
 			266: false,
 		},
 	}
-	msg, err := cbor.Marshal(test, cbor.EncOptions{})
+	msg, err := cbor.Marshal(test)
 	require.NoError(t, err)
 
 	doc, err := Parse(bytes.NewBuffer(msg))

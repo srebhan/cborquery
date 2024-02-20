@@ -8,7 +8,7 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/fxamacker/cbor"
+	"github.com/fxamacker/cbor/v2"
 )
 
 type keyValue struct {
