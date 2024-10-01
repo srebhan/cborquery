@@ -3,7 +3,7 @@ module github.com/srebhan/cborquery
 go 1.20
 
 require (
-	github.com/antchfx/xpath v1.2.5
+	github.com/antchfx/xpath v1.3.1
 	github.com/fxamacker/cbor/v2 v2.7.0
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da
 	github.com/golang/protobuf v1.5.4
