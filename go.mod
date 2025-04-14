@@ -1,6 +1,6 @@
 module github.com/srebhan/cborquery
 
-go 1.20
+go 1.24
 
 require (
 	github.com/antchfx/xpath v1.3.3
