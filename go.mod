@@ -4,7 +4,7 @@ go 1.24
 
 require (
 	github.com/antchfx/xpath v1.3.6
-	github.com/fxamacker/cbor/v2 v2.9.0
+	github.com/fxamacker/cbor/v2 v2.9.2
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da
 	github.com/golang/protobuf v1.5.4
 	github.com/stretchr/testify v1.11.1
